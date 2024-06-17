@@ -1,6 +1,6 @@
-let productsHtmL="";
-products.forEach((product)=>{
-    productsHtmL+=`
+let productsHtmL = "";
+products.forEach((product) => {
+  productsHtmL += `
     <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
@@ -13,14 +13,14 @@ products.forEach((product)=>{
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars*10}.png">
+              src="images/ratings/rating-${product.rating.stars * 10}.png">
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${(product.priceCents/100).toFixed(2)}
+            $${(product.priceCents / 100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
@@ -40,7 +40,7 @@ products.forEach((product)=>{
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -50,30 +50,55 @@ products.forEach((product)=>{
             Add to Cart
           </button>
         </div>
-    `
-})
-document.querySelector('.js-productsGrid').innerHTML=productsHtmL;
+    `;
+});
+document.querySelector(".js-productsGrid").innerHTML = productsHtmL;
 
-document.querySelectorAll('.js-add-to-cart').forEach(button => {
-    button.addEventListener('click',()=>{
-        const productId=button.dataset.productId
-        const itemQuantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+const addedMessageTimeouts = {};
 
-        let matchingItemFromCart;
-        cart.forEach(item=>{
-            if (productId===item.productId) {
-                matchingItemFromCart=item;
-            }
-        });
+document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+  button.addEventListener("click", () => {
+    //const productId=button.dataset.productId
+    const { productId } = button.dataset;
+    const itemQuantity = Number(
+      document.querySelector(`.js-quantity-selector-${productId}`).value
+    );
+    const addedMessage = document.querySelector(`.js-added-${productId}`);
 
-        if (matchingItemFromCart) {
-            matchingItemFromCart.quantity+=itemQuantity;
-        } else {
-            cart.push({
-                productId:productId,
-                quantity:itemQuantity
-            });
-        }
-        console.log(cart);
+    let matchingItemFromCart;
+    cart.forEach((item) => {
+      if (productId === item.productId) {
+        matchingItemFromCart = item;
+      }
     });
+
+    if (matchingItemFromCart) {
+      matchingItemFromCart.quantity += itemQuantity;
+    } else {
+
+      cart.push({
+        productId: productId,
+        quantity: itemQuantity,
+      });
+    }
+    console.log(cart);
+    addedMessageShow();
+
+
+    function addedMessageShow(){
+      addedMessage.style.opacity=1;
+
+      const previousTimeoutId = addedMessageTimeouts[productId];
+      if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+      }
+
+      const timeoutId = setTimeout(() => {
+        addedMessage.style.opacity=0;
+      }, 2000);
+      addedMessageTimeouts[productId] = timeoutId;
+    }
+    
+    
+  });
 });
