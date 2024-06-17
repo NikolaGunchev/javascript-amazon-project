@@ -13,8 +13,22 @@ const products = [
       "sports",
       "apparel"
     ]
-  },
-  {
+  },{
+    id:"jpglb2847e9-5323-403f-b7cf-57fde044a955",
+    image: "images/products/51TkKJlJHsL._SX466_.jpg",
+    name: "Jean Paul Gaultier Les Males De Le Beau Le Parfum Eau De Parfum Intense",
+    rating:{
+      stars:4.5,
+      count:674
+    },
+    priceCents:17979,
+    keywords:[
+      "Jean",
+      "Paul",
+      "Gaultier",
+      "Parfum"
+    ]
+  },{
     id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
     image: "images/products/intermediate-composite-basketball.jpg",
     name: "Intermediate Size Basketball",
@@ -655,6 +669,20 @@ const products = [
       "hoodies",
       "apparel",
       "mens"
+    ]
+  },{
+    id:"chair2847e9-5323-403f-b7cf-57fde044a955",
+    image:"images/products/81FFN7rYwUL._AC_SL1500_.jpg",
+    name:"GABRYLLY Ergonomic Mesh Office Chair",
+    rating:{
+      stars:4.5,
+      count:13144
+    },
+    priceCents:20196,
+    keywords:[
+      "chair",
+      "office",
+      'gabrylly'
     ]
   }
 ];
