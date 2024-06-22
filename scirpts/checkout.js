@@ -34,7 +34,7 @@ cart.forEach((cartItem) => {
             <span>
             Quantity: <span class="quantity-label">${cartItem.quantity}</span>
             </span>
-            <span class="update-quantity-link link-primary">
+            <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
             Update
             </span>
             <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${
@@ -96,8 +96,6 @@ cart.forEach((cartItem) => {
 
 
 let itemsQuantity=document.querySelector(".js-checkout");
-itemsQuantity.innerHTML=JSON.parse(localStorage.getItem('quantity')) || updateCartCheckout();
-
 
 document.querySelector(".js-order-summary").innerHTML = cartHtml;
 itemsQuantity.innerHTML=JSON.parse(localStorage.getItem('quantity')) || updateCartCheckout();
@@ -114,3 +112,10 @@ document.querySelectorAll(".js-delete-link").forEach((link) => {
     itemsQuantity.innerHTML=JSON.parse(localStorage.getItem('quantity')) || updateCartCheckout();
   });
 });
+
+document.querySelectorAll('.js-update-link').forEach((link)=>{
+link.addEventListener('click',()=>{
+    const productId=link.dataset.productId;
+    console.log(productId);
+})
+})
