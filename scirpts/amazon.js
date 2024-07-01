@@ -1,4 +1,4 @@
-import { addToCart, updateCartCheckout} from "../data/cart.js";
+import { addToCart, updateCartCheckout } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
@@ -24,7 +24,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${(formatCurrency(product.priceCents))}
+            $${formatCurrency(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
@@ -60,11 +60,11 @@ document.querySelector(".js-productsGrid").innerHTML = productsHtmL;
 
 const addedMessageTimeouts = {};
 
-  let quantity = document.querySelector('.js-cart-quantity');
-  quantity.innerHTML=JSON.parse(localStorage.getItem('quantity')) || updateCartCheckout()
+let quantity = document.querySelector(".js-cart-quantity");
+quantity.innerHTML = updateCartCheckout();
 
-function addedMessageShow(addedMessage,productId){
-  addedMessage.style.opacity=1;
+function addedMessageShow(addedMessage, productId) {
+  addedMessage.style.opacity = 1;
 
   const previousTimeoutId = addedMessageTimeouts[productId];
   if (previousTimeoutId) {
@@ -72,7 +72,7 @@ function addedMessageShow(addedMessage,productId){
   }
 
   const timeoutId = setTimeout(() => {
-    addedMessage.style.opacity=0;
+    addedMessage.style.opacity = 0;
   }, 2000);
   addedMessageTimeouts[productId] = timeoutId;
 }
@@ -86,8 +86,8 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     );
     const addedMessage = document.querySelector(`.js-added-${productId}`);
 
-    addToCart(productId,itemQuantity);
-    quantity.innerHTML=JSON.parse(localStorage.getItem('quantity')) || updateCartCheckout()
-    addedMessageShow(addedMessage,productId);
+    addToCart(productId, itemQuantity);
+    quantity.innerHTML = updateCartCheckout();
+    addedMessageShow(addedMessage, productId);
   });
 });
