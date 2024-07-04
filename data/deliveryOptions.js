@@ -29,7 +29,7 @@ export function getDeliveryOption(deliveryOptionId) {
   return deliveryOption;
 }
 
-//taking in mind that the weekends arent working days the day is calculated excluding them
+//taking in mind that the weekends aren't working days the day is calculated excluding them
 export function calculateDeliveryDate(deliveryOption) {
   const today = dayjs();
   let deliveryDate = today;
@@ -39,7 +39,13 @@ export function calculateDeliveryDate(deliveryOption) {
     while (isWeekend(deliveryDate)) {
       deliveryDate = deliveryDate.add(1, "days");
     }
+
     deliveryDate = deliveryDate.add(1, "days");
+
+    while (isWeekend(deliveryDate)) {
+      deliveryDate = deliveryDate.add(1, "days");
+    }
+
     days--;
   }
   const dateString = deliveryDate.format("dddd, MMMM D");
