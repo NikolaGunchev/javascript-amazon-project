@@ -154,7 +154,7 @@ export function renderOrderSummary() {
       .classList.remove("is-editing-quantity");
 
     let inputValue = Number(document.querySelector(".quantity-input").value);
-    if (inputValue < 1000 && inputValue >= 0 && inputValue != "") {
+    if (inputValue < 1000 && inputValue > 0 && inputValue != "") {
       updateQuantity(productId, inputValue);
       document.querySelector(".quantity-label").innerHTML = inputValue;
       document.querySelector(".quantity-input").value = "";
