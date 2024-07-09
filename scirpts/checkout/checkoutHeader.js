@@ -1,6 +1,4 @@
-import { updateCartCheckout } from "../../data/cart.js";
-
-export function renderCheckoutHeader(quantity) {
+export function renderCheckoutHeader(quantiy) {
   const html = `
 <div class="header-content">
     <div class="checkout-header-left-section">
@@ -12,7 +10,7 @@ export function renderCheckoutHeader(quantity) {
 
     <div class="checkout-header-middle-section">
         Checkout (<a class="return-to-home-link js-checkout"
-        href="amazon.html">${updateCartCheckout()} items</a>)
+        href="amazon.html">${quantiy} items</a>)
     </div>
 
     <div class="checkout-header-right-section">
