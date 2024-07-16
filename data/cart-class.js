@@ -88,8 +88,4 @@ class Cart {
   }
 }
 
-const cart = new Cart("cart-oop");
-const bussinesCart = new Cart("bussinesCart-oop");
-
-console.log(cart);
-console.log(bussinesCart);
+export let cart=new Cart('cart')

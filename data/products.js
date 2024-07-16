@@ -26,15 +26,76 @@ class Product {
     this.priceCents = productDetails.priceCents;
   }
 
-  getStarsUrl(){
-    return `images/ratings/rating-${this.rating.stars * 10}.png`
+  getStarsUrl() {
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
   }
 
-  getPrice(){
-    return `$${formatCurrency(this.priceCents)}`
+  getPrice() {
+    return `$${formatCurrency(this.priceCents)}`;
+  }
+
+  extraInfoHTML() {
+    return "";
   }
 }
 
+class Clothing extends Product {
+  sizeChartLink;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  extraInfoHTML() {
+    return `
+    <a href="${this.sizeChartLink}" target="_blank">Size chart</a>
+    `;
+  }
+}
+
+class Appliances extends Product {
+  instructionsLink;
+  warrantyLink;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.instructionsLink = productDetails.instructionsLink;
+    this.warrantyLink = productDetails.warrantyLink;
+  }
+
+  extraInfoHTML() {
+    return `
+    <a href="${this.instructionsLink}" target="_blank">Instructions</a>
+    <a href="${this.warrantyLink}" target="_blank">Warranty</a>
+    `;
+  }
+}
+
+export let products = [];
+
+export function loadProducts(fun) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener("load", () => {
+    products = JSON.parse(xhr.response).map((productDetails) => {
+      if (productDetails.type === "clothing") {
+        return new Clothing(productDetails);
+      } else if (productDetails.type === "appliance") {
+        return new Appliances(productDetails);
+      }
+      return new Product(productDetails);
+    });
+
+    console.log(products);
+    fun()
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
+}
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -92,6 +153,9 @@ export const products = [
     },
     priceCents: 1899,
     keywords: ["toaster", "kitchen", "appliances"],
+    type:'appliance',
+    instructionsLink:'images/appliance-instructions.png',
+    warrantyLink:'images/appliance-warranty.png'
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -114,6 +178,9 @@ export const products = [
     },
     priceCents: 3499,
     keywords: ["kitchen", "cookware"],
+    type:'appliance',
+    instructionsLink:'images/appliance-instructions.png',
+    warrantyLink:'images/appliance-warranty.png'
   },
   {
     id: "dd82ca78-a18b-4e2a-9250-31e67412f98d",
@@ -125,6 +192,8 @@ export const products = [
     },
     priceCents: 2400,
     keywords: ["hoodies", "sweaters", "apparel"],
+    type: "clothing",
+    sizeChartLink: "images/clothing-size-chart.png",
   },
   {
     id: "77919bbe-0e56-475b-adde-4f24dfed3a04",
@@ -215,6 +284,8 @@ export const products = [
     },
     priceCents: 1699,
     keywords: ["shorts", "apparel", "mens"],
+    type: "clothing",
+    sizeChartLink: "images/clothing-size-chart.png",
   },
   {
     id: "c2a82c5e-aff4-435f-9975-517cfaba2ece",
@@ -226,6 +297,9 @@ export const products = [
     },
     priceCents: 3074,
     keywords: ["water boiler", "appliances", "kitchen"],
+    type:'appliance',
+    instructionsLink:'images/appliance-instructions.png',
+    warrantyLink:'images/appliance-warranty.png'
   },
   {
     id: "6b07d4e7-f540-454e-8a1e-363f25dbae7d",
@@ -351,6 +425,8 @@ export const products = [
     },
     priceCents: 2290,
     keywords: ["pants", "apparel", "mens"],
+    type: "clothing",
+    sizeChartLink: "images/clothing-size-chart.png",
   },
   {
     id: "1c079479-8586-494f-ab53-219325432536",
@@ -406,6 +482,8 @@ export const products = [
     },
     priceCents: 2400,
     keywords: ["pants", "sweatpants", "jogging", "apparel", "womens"],
+    type: "clothing",
+    sizeChartLink: "images/clothing-size-chart.png",
   },
   {
     id: "d339adf3-e004-4c20-a120-40e8874c66cb",
@@ -439,6 +517,9 @@ export const products = [
     },
     priceCents: 2250,
     keywords: ["coffeemakers", "kitchen", "appliances"],
+    type:'appliance',
+    instructionsLink:'images/appliance-instructions.png',
+    warrantyLink:'images/appliance-warranty.png'
   },
   {
     id: "02e3a47e-dd68-467e-9f71-8bf6f723fdae",
@@ -483,6 +564,9 @@ export const products = [
     },
     priceCents: 10747,
     keywords: ["food blenders", "kitchen", "appliances"],
+    type:'appliance',
+    instructionsLink:'images/appliance-instructions.png',
+    warrantyLink:'images/appliance-warranty.png'
   },
   {
     id: "36c64692-677f-4f58-b5ec-0dc2cf109e27",
@@ -516,6 +600,8 @@ export const products = [
     },
     priceCents: 2400,
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
+    type: "clothing",
+    sizeChartLink: "images/clothing-size-chart.png",
   },
   {
     id: "chair2847e9-5323-403f-b7cf-57fde044a955",
@@ -529,5 +615,11 @@ export const products = [
     keywords: ["chair", "office", "gabrylly"],
   },
 ].map((productDetails)=>{
+  if (productDetails.type==='clothing') {
+    return new Clothing(productDetails);
+  } else if (productDetails.type==='appliance') {
+    return new Appliances(productDetails)
+  }
   return new Product(productDetails);
 });
+*/

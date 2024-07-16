@@ -1,10 +1,4 @@
-import {
-  cart,
-  removeFromCart,
-  updateCartCheckout,
-  updateQuantity,
-  updateDeliveryOption,
-} from "../../data/cart.js";
+import { cart } from '../../data/cart-class.js';
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import {
@@ -18,7 +12,7 @@ import { renderCheckoutHeader } from "./checkoutHeader.js";
 export function renderOrderSummary() {
   let cartHtml = "";
 
-  cart.forEach((cartItem) => {
+  cart.cartItems.forEach((cartItem) => {
     const productId = cartItem.productId;
 
     const matchingProduct = getProduct(productId);
@@ -111,12 +105,12 @@ export function renderOrderSummary() {
 
   document.querySelector(".js-order-summary").innerHTML = cartHtml;
 
-  renderCheckoutHeader(updateCartCheckout());
+  renderCheckoutHeader(cart.updateCartCheckout());
 
   document.querySelectorAll(".js-delete-link").forEach((link) => {
     link.addEventListener("click", () => {
       const productId = link.dataset.productId;
-      removeFromCart(productId);
+      cart.removeFromCart(productId);
 
       renderOrderSummary();
       renderPaymentSummary();
@@ -155,7 +149,7 @@ export function renderOrderSummary() {
 
     let inputValue = Number(document.querySelector(".quantity-input").value);
     if (inputValue < 1000 && inputValue > 0 && inputValue != "") {
-      updateQuantity(productId, inputValue);
+      cart.updateQuantity(productId, inputValue);
       document.querySelector(".quantity-label").innerHTML = inputValue;
       document.querySelector(".quantity-input").value = "";
     } else {
@@ -169,7 +163,7 @@ export function renderOrderSummary() {
   document.querySelectorAll(".js-delivery-option").forEach((element) => {
     const { productId, deliveryOptionId } = element.dataset;
     element.addEventListener("click", () => {
-      updateDeliveryOption(productId, deliveryOptionId);
+      cart.updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
       renderPaymentSummary();
     });
