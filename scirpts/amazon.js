@@ -1,7 +1,9 @@
-import { products, loadProducts } from "../data/products.js";
+import { products, loadProductsFetch } from "../data/products.js";
 import { cart } from "../data/cart-class.js";
 
-loadProducts(renderProductsGrids)
+loadProductsFetch().then(() => {
+  renderProductsGrids();
+});
 
 function renderProductsGrids() {
   let productsHtmL = "";
