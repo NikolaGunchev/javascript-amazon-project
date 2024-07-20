@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        let xml=new XMLHttpRequest()
+
+        addEventListener('load',()=>{
+            console.log(xml.response);
+        })
+        
+        xml.open('GET','https:/supersimplebackend.dev/greeting')
+        xml.send()
+        */
+      /*
+      async function idek() {
+        try {
+          const practice = await fetch("https://amazon.com").then(
+            (response) => {
+              return response.json();
+            }
+          );
+          console.log(practice);
+        } catch (error) {
+          console.log("CORS error. Your request was blocked by the backend.");
+        }
+      }
+      idek();
+        */
+      /*
+      async function idek(){
+        const practice = await fetch("https:/supersimplebackend.dev/greeting",{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+                name:'Your mom'
+            })
+        }).then((respone)=>{
+            return respone.text()
+        })
+        console.log(practice);
+      }
+      idek()
+      */
+
+      async function idek() {
+        try {
+          const practice = await fetch("https://supersimplebackend.dev", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }).then((response) => {
+            if (response.status>=400) {
+                throw response
+            } else return response.json()
+          });
+          
+        } catch (error) {
+            if (error.status===400) {
+                console.log(await error.json())
+            } else console.log('Network error. Please kys.');
+        }
+      }
+      idek();
+    </script>
+  </body>
+</html>

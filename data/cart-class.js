@@ -83,3 +83,11 @@ class Cart {
 }
 
 export let cart=new Cart('cart')
+
+export async function loadCartFetch(){
+ const practice = await fetch('https://supersimplebackend.dev/cart')
+ .then((response)=>{
+  return response.text()
+ })   
+console.log(practice);
+}
