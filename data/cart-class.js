@@ -18,7 +18,7 @@ class Cart {
   updateCartCheckout() {
     let cartQuantity = 0;
     this.cartItems.forEach((cartItem) => {
-      cartQuantity += cartItem.quantity;
+      cartQuantity += Number(cartItem.quantity);
     });
     return cartQuantity;
   }

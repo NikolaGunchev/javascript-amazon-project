@@ -16,7 +16,7 @@ async function renderOrdersPage() {
             <div class="order-header-left-section">
               <div class="order-date">
                 <div class="order-header-label">Order Placed:</div>
-                <div>${calculateDate(order.ordertime)}</div>
+                <div>${calculateDate(order.orderTime)}</div>
               </div>
               <div class="order-total">
                 <div class="order-header-label">Total:</div>
@@ -57,7 +57,8 @@ async function renderOrdersPage() {
             <div class="product-quantity">
                 Quantity: ${product.quantity}
             </div>
-            <button class="buy-again-button button-primary">
+            <button class="buy-again-button button-primary js-buy-again" 
+              data-product-id="${matchingProduct.id}" data-product-quantity="${product.quantity}">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
                 <span class="buy-again-message">Buy it again</span>
             </button>
@@ -84,6 +85,18 @@ async function renderOrdersPage() {
   }
 
   document.querySelector('.js-cart-quantity').innerHTML=cart.updateCartCheckout()
+
+  document.querySelectorAll('.js-buy-again').forEach((but)=>{
+    but.addEventListener('click',()=>{
+      const productId=but.dataset.productId
+      const productQuant=but.dataset.productQuantity
+      
+      cart.addToCart(productId,productQuant)
+      cart.saveToStorage()
+
+      renderOrdersPage();
+    })
+  })
 }
 renderOrdersPage();
 
