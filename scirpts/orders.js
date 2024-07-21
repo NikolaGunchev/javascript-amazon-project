@@ -78,11 +78,7 @@ async function renderOrdersPage() {
 
   document.querySelector(".js-orders-grid").innerHTML = orderHeaderHtml;
 
-  function calculateDate(rawDate) {
-    let date = dayjs(rawDate);
-    let formated = date.format("MMMM D");
-    return formated;
-  }
+
 
   document.querySelector('.js-cart-quantity').innerHTML=cart.updateCartCheckout()
 
@@ -100,4 +96,19 @@ async function renderOrdersPage() {
 }
 renderOrdersPage();
 
+export function calculateDate(rawDate) {
+  let date = dayjs(rawDate);
+  let formated = date.format("MMMM D");
+  return formated;
+}
 
+export function getOrder(orderId) {
+  let matchingOrder;
+  orders.forEach((order) => {
+    if (order.id === orderId) {
+      matchingOrder = order;
+    }
+  });
+
+  return matchingOrder;
+}
